@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+    webapp:
+        volumes:
+            - ./:/server/
+            - /server/node_modules/
+        environment:
+          - NODE_ENV=test
+        command: nodemon --exec 'npx ts-node' src/index.ts
+        env_file:
+          - ./env/env.test

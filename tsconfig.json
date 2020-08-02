@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["src/*"],
+            "express-serve-static-core": ["types/express-serve-static-core"]
+        },
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "target": "ES6",
+        "outDir": "dist",
+        "typeRoots": [
+            "./src/typings",
+        ],
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "./src/pages/*.*"
+    ],
+    "types": [
+        "node"
+    ],
+    "files":[
+        "src/typings/global.d.ts",
+        "src/typings/express-serve-static-core/index.d.ts"
+    ]
+}

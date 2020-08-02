@@ -1,0 +1,7 @@
+node_modules
+dist
+yarn-error.log
+repo
+yarn.lock
+credentials.env
+.env

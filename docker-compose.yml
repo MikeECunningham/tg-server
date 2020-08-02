@@ -1,0 +1,31 @@
+version: "3.3"
+services:
+  webapp:
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    volumes:
+      - tg-data:/data
+    depends_on:
+      - "database"
+    environment:
+      - NODE_ENV=prod
+      - DB_ROOT_USER=${DB_ROOT_USER}
+      - DB_ROOT_PW=${DB_ROOT_PW}
+    #command: npm run-script build && npm run-script start
+    command: nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'npx ts-node' src/index.ts
+  database:
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+      - MONGO_NON_ROOT_USERNAME=${DB_NON_ROOT_NAME}
+      - MONGO_NON_ROOT_PASSWORD=${DB_NON_ROOT_PW}
+      - MONGO_INITDB_ROOT_USERNAME=${DB_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_ROOT_PW}
+    volumes:
+      - tg-database-data:/data/db
+    image: mongo:4.2.1-bionic
+volumes:
+  tg-data:
+  tg-database-data:

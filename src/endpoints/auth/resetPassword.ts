@@ -1,0 +1,61 @@
+import { NextFunction, Response, Request } from "express";
+import { Schema, Validator } from "jsonschema";
+import { User } from "@src/lib/models/user";
+import { Servlet } from "@src/lib/ts/servlet";
+import config from "@src/config";
+import * as jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
+import logs from "@src/lib/ts/logger";
+const logger = logs(__filename);
+
+const servlet = new Servlet();
+
+const validationSchema: Schema = {
+    type: "object",
+    properties: {
+        token: { type: "string" },
+        password: { type: "string", minLength: 8 }
+    },
+    required: ["token", "password"],
+};
+
+interface RESTRequest extends Request {
+    body: {
+        token: string;
+        password: string;
+    };
+}
+
+interface Payload {
+    _id: string;
+}
+
+servlet.init = async function (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    const validator = new Validator();
+    const result = validator.validate(req.body, validationSchema);
+    if (!result.valid) {
+        logger.verbose(`Invalid json schema in password reset: ${result.errors.toString()}`);
+        return res.json({ failure: "Invalid JSON Schema" });
+    }
+    return next();
+};
+
+servlet.post = async function (req: RESTRequest, res: Response, next: NextFunction): Promise<Response> {
+    try {
+        const decodedToken: Payload = jwt.verify(req.body.token, config.verificationOptions.tokenSecret) as Payload;
+        if (req.body.password.length < 8) { return res.json({ failure: "New password must be at least 8 characters long" }); }
+        try {
+            if (!await User.findByIdAndUpdate(decodedToken._id, { password: await bcrypt.hash(req.body.password, config.bcryptHashRounds) })) {
+                return res.json({ failure: "No user updated" });
+            }
+        } catch (e) {
+            return res.json({ failure: "Error when finding user in db" });
+        }
+    } catch (err) {
+        logger.verbose(`Error thrown when verifying user in resetPassword: ${err}`);
+        return res.json({ failure: "This link is either invalid or expired." });
+    }
+    return res.json({});
+};
+
+export default servlet;

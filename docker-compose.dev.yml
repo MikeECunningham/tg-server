@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+    webapp:
+        volumes:
+            - ./:/server/
+            - /server/node_modules/
+        environment:
+          - NODE_ENV=dev
+        command: nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'npx ts-node' src/index.ts
