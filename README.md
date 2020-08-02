@@ -28,7 +28,6 @@ Simply run
 
 # Dev Running
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
-docker-compose run -e "MAILCHIMP_API_KEY=ed1ca542abf7a11b153f0b0f13504963-us8" --service-ports webapp npm run-script start
 
 # System Prerequisites
 
@@ -63,7 +62,7 @@ If installing natively, then install required tools:
 
 * mongodb
     ```shell
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv [key]
     echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
     sudo apt-get update
     sudo apt-get install -y mongodb-org
