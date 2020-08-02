@@ -3,10 +3,9 @@ This repository is composed of a node.js and express server that hosts the rest 
 
 # Developing
 
-It is highly recommended that a modern IDE like
-[Visual Studio Code](https://code.visualstudio.com/) is used to work with the
-code.  It will help prevent a lot of programming issues and style issues that
-make the code hard to maintain.
+The primary action of the server is managed by endpoints in the /src/endpoints/ directory. Arrived at past the middleware step,
+these points analyze the integrity of request structures and perform the processing and database access involved in managing,
+collecting, and distributing user account and observation data.
 
 # Preparing working environments
 
