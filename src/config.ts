@@ -47,7 +47,7 @@ const config: Config = {
     defaultUser: {
         firstName: "Admin",
         lastName: "Admin",
-        password: "Password123!",
+        password: "",
         admin: true,
         email: "landbetweendeveloper@gmail.com",
         activated: true,
@@ -66,7 +66,7 @@ const config: Config = {
     },
     facebook: {
         app_id: "2318054821808468",
-        app_secret: "6aa7aa7a400e56f861b002e1a58b4a8e",
+        app_secret: "",
         //callback: "https://server.turtleguardians.com/",
         callback: "http://localhost:8080/"
     },
